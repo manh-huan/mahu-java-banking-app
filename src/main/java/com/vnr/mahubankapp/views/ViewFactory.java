@@ -1,9 +1,10 @@
 package com.vnr.mahubankapp.views;
 
 
+import com.vnr.mahubankapp.controller.admin.AdminController;
 import com.vnr.mahubankapp.controller.client.ClientController;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -11,18 +12,73 @@ import javafx.stage.Stage;
 
 public class ViewFactory {
 
-    private final StringProperty clientSelectedMenuItem;
-
+    private final ObjectProperty<ClientMenuOptions> clientSelectedMenuItem;
+    private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem ;
     private AnchorPane dashboardView;
     private AnchorPane accountsView;
     private AnchorPane transactionView;
+    private AnchorPane clientsView;
+    private AnchorPane createClientView;
+    private AnchorPane depositView;
+
+    private final AccountType loginAccountType;
 
     public ViewFactory() {
-        this.clientSelectedMenuItem = new SimpleStringProperty("Dashboard");
+        this.loginAccountType = AccountType.CLIENT;
+        this.clientSelectedMenuItem = new SimpleObjectProperty<>();
+        this.adminSelectedMenuItem = new SimpleObjectProperty<>();
     }
 
-    public StringProperty getClientSelectedMenuItemProperty() {
+    public ObjectProperty<ClientMenuOptions> getClientSelectedMenuItemProperty() {
         return clientSelectedMenuItem;
+    }
+
+    public ObjectProperty<AdminMenuOptions> getAdminSelectedMenuItemProperty() {
+        return adminSelectedMenuItem;
+    }
+
+    public AccountType getLoginAccountType() {
+        return loginAccountType;
+    }
+
+
+    public AnchorPane getCreateClientView() {
+        if (createClientView == null) {
+            try {
+                createClientView = new AnchorPane();
+                createClientView.getChildren().add(new FXMLLoader(getClass().getResource("/com/vnr/mahubankapp/fxml/admin/createClient.fxml")).load());
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to load Create Client view", e);
+            }
+        }
+        return createClientView;
+    }
+
+    public AnchorPane getClientsView() {
+        if (clientsView == null) {
+            try {
+                clientsView = new AnchorPane();
+                clientsView.getChildren().add(new FXMLLoader(getClass().getResource("/com/vnr/mahubankapp/fxml/admin/clients.fxml")).load());
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to load Clients view", e);
+            }
+        }
+        return clientsView;
+    }
+
+    public AnchorPane getDepositView() {
+        if (depositView == null) {
+            try {
+                depositView = new AnchorPane();
+                depositView.getChildren().add(new FXMLLoader(getClass().getResource("/com/vnr/mahubankapp/fxml/admin/deposit.fxml")).load());
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to load Deposit view", e);
+            }
+        }
+        return depositView;
     }
 
     public AnchorPane getDashboardView() {
@@ -73,6 +129,13 @@ public class ViewFactory {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/vnr/mahubankapp/fxml/client/client.fxml"));
         ClientController clientController = new ClientController();
         loader.setController(clientController);
+        createStage(loader);
+    }
+
+    public void showAdminWindow() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/vnr/mahubankapp/fxml/admin/admin.fxml"));
+        AdminController adminController = new AdminController();
+        loader.setController(adminController);
         createStage(loader);
     }
 

@@ -16,9 +16,9 @@ public class ClientController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Model.getInstance().getViewFactory().getClientSelectedMenuItemProperty().addListener((observableValue, oldValue, newValue) -> {
             switch (newValue) {
-                case "Dashboard" -> client_parent.setCenter(Model.getInstance().getViewFactory().getDashboardView());
-                case "Transaction" -> client_parent.setCenter(Model.getInstance().getViewFactory().getTransactionView());
-                case "Accounts" -> client_parent.setCenter(Model.getInstance().getViewFactory().getClientAccountsView());
+                case DASHBOARD -> client_parent.setCenter(Model.getInstance().getViewFactory().getDashboardView());
+                case TRANSACTIONS -> client_parent.setCenter(Model.getInstance().getViewFactory().getTransactionView());
+                case ACCOUNTS -> client_parent.setCenter(Model.getInstance().getViewFactory().getClientAccountsView());
 
                 default -> client_parent.setCenter(Model.getInstance().getViewFactory().getDashboardView());
             }

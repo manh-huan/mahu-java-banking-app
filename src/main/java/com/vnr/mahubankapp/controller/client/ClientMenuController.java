@@ -1,6 +1,7 @@
 package com.vnr.mahubankapp.controller.client;
 
 import com.vnr.mahubankapp.model.Model;
+import com.vnr.mahubankapp.views.ClientMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
@@ -30,15 +31,17 @@ public class ClientMenuController implements Initializable {
     }
 
     private void onDashboard() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItemProperty().set("Dashboard");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItemProperty().set(ClientMenuOptions.DASHBOARD);
     }
 
     private void onTransaction() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItemProperty().set("Transaction");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItemProperty().set(ClientMenuOptions.TRANSACTIONS);
     }
 
     private void onAccounts() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItemProperty().set("Accounts");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItemProperty().set(ClientMenuOptions.ACCOUNTS);
     }
+
+
 
 }
